@@ -6,12 +6,12 @@
 
 Я решил похулиганить и установил последнюю версию с использованием VPN. Возможно я пожалею об этом позже, но версия 1.5 есть если что на ноутбуке, так что попробуем.
 Вывод команды:
-```vladimir@vladimir-desktop:~/Documents/netology/ter-homeworks/01$ terraform --version
-Terraform v1.8.3-dev
-on linux_amd64
+```vladimir@vladimir-desktop:~/Documents/netology/ter-homeworks/01$ terraform --version```
+```Terraform v1.8.3-dev```
+```on linux_amd64```
 
-Your version of Terraform is out of date! The latest version
-is 1.8.3. You can update by downloading from https://www.terraform.io/downloads.html```
+```Your version of Terraform is out of date! The latest version```
+```is 1.8.3. You can update by downloading from https://www.terraform.io/downloads.html```
 
 Скриншот так же будет приложен.
 
@@ -19,13 +19,13 @@ is 1.8.3. You can update by downloading from https://www.terraform.io/downloads.
 ок
 3. Убедитесь, что в вашей ОС установлен docker.
 
-```vladimir@vladimir-desktop:~/Documents/netology/ter-homeworks/01$ docker --version
-Docker version 26.1.2, build 211e74b```
+```vladimir@vladimir-desktop:~/Documents/netology/ter-homeworks/01$ docker --version```
+```Docker version 26.1.2, build 211e74b```
 
 4. Зарегистрируйте аккаунт на сайте https://hub.docker.com/, выполните команду docker login и введите логин, пароль.
 
-```ок, логин в docker hub - vladimirthesecond, аналогично github
-Login Succeeded```
+ок, логин в docker hub - vladimirthesecond, аналогично github
+```Login Succeeded```
 
 ### Задание 1
 
@@ -55,26 +55,26 @@ Login Succeeded```
 
 5. Выполните код. В качестве ответа приложите: исправленный фрагмент кода и вывод команды ```docker ps```.
 
-```resource "docker_container" "nginx" {
+resource "docker_container" "nginx" {
   image = docker_image.nginx.image_id
-  name  = "example_${random_password.random_string.result}"```
+  name  = "example_${random_password.random_string.result}"
 
-```  vladimir@vladimir-desktop:~/Documents/netology/ter-homeworks/01/src$ sudo docker ps
+  vladimir@vladimir-desktop:~/Documents/netology/ter-homeworks/01/src$ sudo docker ps
 CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                  NAMES
-63e17939673d   1d668e06f1e5   "/docker-entrypoint.…"   4 minutes ago   Up 4 minutes   0.0.0.0:9090->80/tcp   example_ffEgsL9IQaqUNNe9```
+63e17939673d   1d668e06f1e5   "/docker-entrypoint.…"   4 minutes ago   Up 4 minutes   0.0.0.0:9090->80/tcp   example_ffEgsL9IQaqUNNe9
 
 6. Замените имя docker-контейнера в блоке кода на ```hello_world```. Не перепутайте имя контейнера и имя образа. Мы всё ещё продолжаем использовать name = "nginx:latest". Выполните команду ```terraform apply -auto-approve```.
 Объясните своими словами, в чём может быть опасность применения ключа  ```-auto-approve```. Догадайтесь или нагуглите зачем может пригодиться данный ключ? В качестве ответа дополнительно приложите вывод команды ```docker ps```.
 
-```vladimir@vladimir-desktop:~/Documents/netology/ter-homeworks/01/src$ sudo docker ps
+vladimir@vladimir-desktop:~/Documents/netology/ter-homeworks/01/src$ sudo docker ps
 CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                  NAMES
-8d2aeb602c2b   1d668e06f1e5   "/docker-entrypoint.…"   6 seconds ago   Up 5 seconds   0.0.0.0:9090->80/tcp   hello_world_ffEgsL9IQaqUNNe9```
+8d2aeb602c2b   1d668e06f1e5   "/docker-entrypoint.…"   6 seconds ago   Up 5 seconds   0.0.0.0:9090->80/tcp   hello_world_ffEgsL9IQaqUNNe9
 
 Ключ --auto-approve пригодится, если код будет выполняться автоматизированно, без участия человека. Например, если нужно будет поставить на расписание запуск terraform, а присутствие человека невозможно или избыточно. Опасность в том, что могут примениться нежелательные изменения, которые не планировалось применять.
 
 8. Уничтожьте созданные ресурсы с помощью **terraform**. Убедитесь, что все ресурсы удалены. Приложите содержимое файла **terraform.tfstate**.
 
-```vladimir@vladimir-desktop:~/Documents/netology/ter-homeworks/01/src$ cat terraform.tfstate
+vladimir@vladimir-desktop:~/Documents/netology/ter-homeworks/01/src$ cat terraform.tfstate
 {
   "version": 4,
   "terraform_version": "1.8.3",
@@ -83,9 +83,10 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS   
   "outputs": {},
   "resources": [],
   "check_results": null
-}```
+}
 
 9. Объясните, почему при этом не был удалён docker-образ **nginx:latest**. Ответ **ОБЯЗАТЕЛЬНО НАЙДИТЕ В ПРЕДОСТАВЛЕННОМ КОДЕ**, а затем **ОБЯЗАТЕЛЬНО ПОДКРЕПИТЕ** строчкой из документации [**terraform провайдера docker**](https://docs.comcloud.xyz/providers/kreuzwerker/docker/latest/docs).  (ищите в классификаторе resource docker_image )
 
 docker образ не был удалён, так как в main.tf указан параметр keep_locally = true, согласно которому команда terraform destroy не удалит образ, скачанный локально. Ссылка на документацию terraform: https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs/resources/image
 ```"**keep_locally** (Boolean) If true, then the Docker **image won't be deleted on destroy operation**. . ."```
+
