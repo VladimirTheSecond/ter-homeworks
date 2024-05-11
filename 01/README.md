@@ -89,4 +89,3 @@ vladimir@vladimir-desktop:~/Documents/netology/ter-homeworks/01/src$ cat terrafo
 
 docker образ не был удалён, так как в main.tf указан параметр keep_locally = true, согласно которому команда terraform destroy не удалит образ, скачанный локально. Ссылка на документацию terraform: https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs/resources/image
 ```"**keep_locally** (Boolean) If true, then the Docker **image won't be deleted on destroy operation**. . ."```
-
