@@ -16,16 +16,16 @@ output "web_fqdn" {
 
 ###db instance
 output "db_instance_name" {
-  value       = yandex_compute_instance.netology-develop-platform-db.name
+  value       = yandex_compute_instance.platform-db.name
   description = "db instance name"
 }
 
 output "db_external_ip" {
-  value       = yandex_compute_instance.netology-develop-platform-db.network_interface
+  value       = yandex_compute_instance.platform-db.network_interface
   description = "db instance network interface"
 }
 
 output "db_fqdn" {
-  value       = yandex_compute_instance.netology-develop-platform-db.fqdn
+  value       = yandex_compute_instance.platform-db.fqdn
   description = "db instance network interface"
 }

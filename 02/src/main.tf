@@ -3,19 +3,20 @@ data "yandex_compute_image" "ubuntu" {
 }
 
 ###vm_web
-resource "yandex_vpc_network" "develop" {
+resource "yandex_vpc_network" "netology" {
   name = var.vpc_name
 }
 resource "yandex_vpc_subnet" "develop" {
-  name           = var.vpc_name
+  name           = var.vm_web_name
   zone           = var.default_zone
-  network_id     = yandex_vpc_network.develop.id
+  network_id     = yandex_vpc_network.netology.id
   v4_cidr_blocks = var.default_cidr
 }
 
 resource "yandex_compute_instance" "platform" {
   name        = var.vm_web_name
   platform_id = var.vm_web_platform_id
+  zone        = var.default_zone
   resources {
     cores         = var.vm_web_cores
     memory        = var.vm_web_memory
@@ -41,19 +42,17 @@ resource "yandex_compute_instance" "platform" {
 
 }
 ###vm_db
-resource "yandex_vpc_network" "db" {
-  name = var.vm_db_vpc_name
-}
-resource "yandex_vpc_subnet" "db" {
-  name           = var.vm_db_vpc_name
+resource "yandex_vpc_subnet" "platform-db" {
+  name           = var.vm_db_name
   zone           = var.vm_db_zone
-  network_id     = yandex_vpc_network.db.id
-  v4_cidr_blocks = var.default_cidr
+  network_id     = yandex_vpc_network.netology.id
+  v4_cidr_blocks = var.database_cidr
 }
 
-resource "yandex_compute_instance" "netology-develop-platform-db" {
+resource "yandex_compute_instance" "platform-db" {
   name        = var.vm_db_name
   platform_id = var.vm_db_platform_id
+  zone        = var.vm_db_zone
   resources {
     cores         = var.vm_db_cores
     memory        = var.vm_db_memory
@@ -68,7 +67,7 @@ resource "yandex_compute_instance" "netology-develop-platform-db" {
     preemptible = true
   }
   network_interface {
-    subnet_id = yandex_vpc_subnet.db.id
+    subnet_id = yandex_vpc_subnet.platform-db.id
     nat       = true
   }
 
