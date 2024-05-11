@@ -1,8 +1,3 @@
-variable "vm_db_family" {
-  type        = string
-  default     = "ubuntu-2004-lts"
-}
-
 variable "vm_db_name" {
   type        = string
   default     = "netology-develop-platform-web"
@@ -32,4 +27,10 @@ variable "vm_db_zone" {
   type        = string
   default     = "ru-central1-b"
   description = "https://cloud.yandex.ru/docs/overview/concepts/geo-scope"
+}
+
+variable "vm_db_vpc_name" {
+  type        = string
+  default     = "db"
+  description = "VPC network & subnet name"
 }

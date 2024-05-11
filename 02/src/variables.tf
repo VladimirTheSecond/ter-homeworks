@@ -33,7 +33,7 @@ variable "vpc_name" {
 }
 
 ###VM specific vars
-variable "vm_web_family" {
+variable "family" {
   type        = string
   default     = "ubuntu-2004-lts"
 }
