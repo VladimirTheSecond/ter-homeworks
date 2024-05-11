@@ -14,7 +14,7 @@ resource "yandex_vpc_subnet" "develop" {
 }
 
 resource "yandex_compute_instance" "platform" {
-  name        = var.vm_web_name
+  name        = local.local_vm_web_name
   platform_id = var.vm_web_platform_id
   zone        = var.default_zone
   resources {
@@ -50,7 +50,7 @@ resource "yandex_vpc_subnet" "platform-db" {
 }
 
 resource "yandex_compute_instance" "platform-db" {
-  name        = var.vm_db_name
+  name        = local.local_vm_db_name
   platform_id = var.vm_db_platform_id
   zone        = var.vm_db_zone
   resources {
