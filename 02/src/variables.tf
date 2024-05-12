@@ -48,19 +48,26 @@ variable "vm_web_platform_id" {
   default     = "standard-v1"
 }
 
-variable "vm_web_cores" {
-  type        = number
-  default     = 2
+variable "vms_resources" {
+  description = "Map of resourses"
+  type        = map(object({
+    cores         = optional(number)
+    memory        = optional(number)
+    core_fraction = optional(number)
+  }))
+  
+  default = {
+  web = {
+    cores         = 2
+    memory        = 1
+    core_fraction = 5
+  }
+  db = {
+    cores         = 2
+    memory        = 2
+    core_fraction = 20
+  }
 }
-
-variable "vm_web_memory" {
-  type        = number
-  default     = 1
-}
-
-variable "vm_web_core_fraction" {
-  type        = number
-  default     = 5
 }
 
 ###ssh vars
@@ -69,3 +76,19 @@ variable "vms_ssh_root_key" {
   type        = string
   description = "ssh-keygen -t ed25519"
 }
+
+###metadata
+  variable "vms_metadata" {
+    description = "metadata for virtual machines - serial port flag, ssh-key"
+    type        = map(object({
+      serial-port-enable = optional(number)
+      ssh-keys           = optional(string)
+    }))
+
+    default = {
+      ubuntu = {
+      serial-port-enable = 1
+      ssh-keys           = "ubuntu:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA5jVTBmdxuviDkv7gY/BKNaSRIAmXmgUxHjqKIuT8mh vladimir@vladimir-desktop"
+      }
+    }
+  }
