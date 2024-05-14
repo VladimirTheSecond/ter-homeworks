@@ -35,3 +35,24 @@ variable "platform_id" {
   type        = string
   default     = "standard-v1"
 }
+
+variable "family" {
+  type        = string
+  default     = "ubuntu-2404-lts"
+}
+
+###metadata
+variable "metadata" {
+  description = "metadata for virtual machines - serial port flag, ssh-key"
+  type        = map(object({
+    serial-port-enable = optional(number)
+    ssh-keys           = optional(string)
+}))
+
+  default = {
+    ubuntu = {
+    serial-port-enable = 1
+    ssh-key           = "ubuntu:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA5jVTBmdxuviDkv7gY/BKNaSRIAmXmgUxHjqKIuT8mh vladimir@vladimir-desktop"
+    }
+  }
+}

@@ -1,3 +1,7 @@
+data "yandex_compute_image" "ubuntu" {
+  family = var.family
+}
+
 resource "yandex_compute_instance" "web" {
   for_each = toset([1,2])
   name = "web-${each.key}"
@@ -23,9 +27,8 @@ resource "yandex_compute_instance" "web" {
   }
 
   metadata = {
-    serial-port-enable = var.vms_metadata.ubuntu.serial-port-enable
-    ssh-keys           = var.vms_metadata.ubuntu.ssh-keys
+    serial-port-enable = var.metadata.ubuntu.serial-port-enable
+    ssh-keys           = var.metadata.ubuntu.ssh-key
   }
 
-}
 }
