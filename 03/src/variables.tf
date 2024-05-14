@@ -30,3 +30,8 @@ variable "vpc_name" {
   default     = "develop"
   description = "VPC network&subnet name"
 }
+
+variable "platform_id" {
+  type        = string
+  default     = "standard-v1"
+}
